@@ -174,4 +174,12 @@ pack=$(helm package .)
 package=$(sed -E "s/.*(${release}-.*?\.tgz).*/\1/g" <<<$pack)
 echo -e "Paket ${GREEN}$package${NC} vorbereitet."
 
+##################
+# Cleanup
+##################
+rm Chart.yaml
+rm values.yaml
+rm ${release}-*.tgz
+
 echo -e "${GREEN}Fertig!${NC}"
+
