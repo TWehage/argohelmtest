@@ -1,0 +1,93 @@
+[
+  {
+    "id": "hamburg",
+    "name": "Showroom Stage Hamburg",
+    "address": "Mönckebergstraße 25, 20095 Hamburg",
+    "lat": "53.5507079",
+    "long": "9.997517",
+    "radius": 100,
+    "booking": "ShowroomTestII",
+    "services": {
+      "showroom": "Lichtberatung im Showroom",
+      "phone": "Lichtberatung am Telefon"
+    }
+  },
+  {
+    "id": "berlin",
+    "name": "Showroom Stage Berlin",
+    "address": "Hardenbergstraße 20, 10623 Berlin",
+    "lat": "52.507143",
+    "long": "13.329656",
+    "radius": 100,
+    "booking": "",
+    "services": {
+      "showroom": "Lichtberatung im Showroom",
+      "phone": "Lichtberatung am Telefon"
+    }
+  },
+  {
+    "id": "dd",
+    "name": "Showroom Stage Düsseldorf",
+    "address": "Tonhallenstraße 14-15, 40211 Düsseldorf",
+    "lat": "51.226456",
+    "long": "6.788482",
+    "radius": 50,
+    "booking": "",
+    "services": {
+      "showroom": "Lichtberatung im Showroom",
+      "phone": "Lichtberatung am Telefon"
+    }
+  },
+  {
+    "id": "ffm",
+    "name": "Showroom Stage Frankfurt",
+    "address": "Bethmannstraße 56, 60311 Frankfurt am Main",
+    "lat": "50.1106035",
+    "long": "8.6759958",
+    "radius": 100,
+    "booking": "",
+    "services": {
+      "showroom": "Lichtberatung im Showroom",
+      "phone": "Lichtberatung am Telefon"
+    }
+  },
+  {
+    "id": "cgn",
+    "name": "Showroom Stage Köln",
+    "address": "Gürzenichstraße 17, 50667 Köln",
+    "lat": "50.935173",
+    "long": "6.953101",
+    "radius": 50,
+    "booking": "",
+    "services": {
+      "showroom": "Lichtberatung im Showroom",
+      "phone": "Lichtberatung am Telefon"
+    }
+  },
+  {
+    "id": "muc",
+    "name": "Showroom Stage München",
+    "address": "Ingolstädter Straße 20-22, 80807 München",
+    "lat": "48.137154",
+    "long": "11.576124",
+    "radius": 100,
+    "booking": "",
+    "services": {
+      "showroom": "Lichtberatung im Showroom",
+      "phone": "Lichtberatung am Telefon"
+    }
+  },
+  {
+    "id": "none",
+    "name": "Online-Stage-Beratung",
+    "address": null,
+    "lat": null,
+    "long": null,
+    "radius": 0,
+    "booking": "ShowroomTest",
+    "services": {
+      "phone": "Lichtberatung am Telefon",
+      "video": "Lichtberatung per Video-Chat"
+    }
+  }
+]
