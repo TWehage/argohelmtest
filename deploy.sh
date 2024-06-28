@@ -162,24 +162,5 @@ echo -e "Setze SecretName ${BLUE}${release}-esb-test-prediger-de-tls${NC}"
 values=$(sed -r "s/##SECRETNAME##/${release}-esb-test-prediger-de-tls/g" <<< "$values")
 echo "$values" > "values.yaml"
 
-##################
-# Build helm package
-##################
-
-echo
-# remove old packages
-rm -f ${release}-*.tgz
-echo -e "${WHITE}Erstelle neues Helm Paket:${NC}"
-pack=$(helm package .)
-package=$(sed -E "s/.*(${release}-.*?\.tgz).*/\1/g" <<<$pack)
-echo -e "Paket ${GREEN}$package${NC} vorbereitet."
-
-##################
-# Cleanup
-##################
-rm Chart.yaml
-rm values.yaml
-rm ${release}-*.tgz
-
 echo -e "${GREEN}Fertig!${NC}"
 
