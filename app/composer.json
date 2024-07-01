@@ -1,0 +1,28 @@
+{
+  "name": "test/app",
+  "description": "Testing Argo CD",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "thorsten",
+      "email": "T.Wehage@prediger.de"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "testapp\\": ""
+    }
+  },
+  "require": {
+    "guzzlehttp/psr7": "^2.4.1"
+  },
+  "require-dev": {
+    "phpstan/phpstan": "^1.10.45"
+  },
+  "config": {
+    "allow-plugins": {
+      "php-http/discovery": true
+    }
+  }
+}

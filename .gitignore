@@ -1,8 +1,3 @@
-app
-
 .idea
 .env
 
-#chart/*.tgz
-#chart/Chart.yaml
-#chart/values.yaml
