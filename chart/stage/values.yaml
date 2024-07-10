@@ -34,14 +34,14 @@ ingress:
     nginx.ingress.kubernetes.io/x-forwarded-prefix: /$1
     nginx.ingress.kubernetes.io/enable-cors: "true"
   hosts:
-    - host: testapp.esb.test-prediger.de
+    - host: testappstage.esb.test-prediger.de
       paths:
         - path: /(.*)
           pathType: ImplementationSpecific
   tls:
-    - secretName: testapp-esb-test-prediger-de-tls
+    - secretName: testappstage-esb-test-prediger-de-tls
       hosts:
-        - testapp.esb.test-prediger.de
+        - testappstage.esb.test-prediger.de
 
 resources: {}
 

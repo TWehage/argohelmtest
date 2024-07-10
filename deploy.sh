@@ -30,39 +30,26 @@ echo
 if [ "$mode" = "live" ]; then
   echo -e "${YELLOW}Production Modus!${NC}"
   debug_mode=false
-  stage_mode=false
-elif [ "$mode" = "stage" ]; then
-  echo -e "${PURPLE}Stage Modus!${NC}"
-  debug_mode=false
-  stage_mode=true
-elif [ "$mode" = "debug-live" ]; then
-  echo -e "${PURPLE}Debug Live Modus!${NC}"
+elif [ "$mode" = "debug" ]; then
+  echo -e "${PURPLE}Debug Modus!${NC}"
   debug_mode=true
-  stage_mode=false
 elif [ "$mode" = "" ]; then
-  echo -e "${PURPLE}Debug Stage Modus!${NC}"
+  echo -e "${PURPLE}Debug Modus!${NC}"
   debug_mode=true
-  stage_mode=true
 else
   echo -e "USAGE: ${BLUE}deploy.sh #mode#${NC}"
-  echo -e "Valid modes: live|stage|debug-live or empty = debug-stage"
+  echo -e "Valid modes: live|debug or empty = debug"
   exit
 fi
 
 image=ghcr.io/twehage/testapp
-if $stage_mode ; then
-  echo -e "${PURPLE}Stage Settings!${NC}"
-  namespace=testapp
-  release=testapp
+if $debug_mode ; then
+echo -e "${PURPLE}Debug Live Settings!${NC}"
 else
-  if $debug_mode ; then
-    echo -e "${PURPLE}Debug Live Settings!${NC}"
-  else
-    read -p "Live Settings: Fortsetzen? (J/N): " confirm && [[ $confirm == [jJ] || $confirm == [jJ][aA] ]] || exit 1
-  fi
-  namespace=testapp
-  release=testapp
+read -p "Live Settings: Fortsetzen? (J/N): " confirm && [[ $confirm == [jJ] || $confirm == [jJ][aA] ]] || exit 1
 fi
+namespace=testapp
+release=testapp
 
 ##################
 # Check Kubernetes Connection
@@ -90,7 +77,7 @@ fi
 echo
 echo -e "${WHITE}Aktuelle Docker Images:${NC}"
 images=$(docker images | grep -E "^${image}.*\s([0-9]+\.[0-9]\.[0-9])")
-echo -e $images
+echo -e "$images"
 
 read -p 'Neue Versionsnummer: ' version
 vpattern="^[0-9]+\.[0-9]\.[0-9]"
@@ -141,26 +128,27 @@ cd chart
 ##################
 # Prepare helm package
 ##################
+for type in stage live; do
+	echo
+	echo -e "${WHITE}Anpassen der Helm Chart Konfiguration:${NC}"
+	echo -e "${BROWN}${type}/Chart.yaml${NC}"
+	chart=$(cat "Chart.tmpl")
+	echo -e "Setze Name ${BLUE}${release}${type}${NC}"
+	chart=$(sed -r "s/##NAME##/${release}${type}/g" <<< "$chart")
+	echo -e "Setze App Version ${BLUE}$version${NC}"
+	chart=$(sed -r "s/##APP_VERSION##/$version/g" <<< "$chart")
+	chart=$(sed -r "s/##HELM_VERSION##/$version/g" <<< "$chart")
+	echo "${chart}" > "${type}/Chart.yaml"
 
-echo
-echo -e "${WHITE}Anpassen der Helm Chart Konfiguration:${NC}"
-echo -e "${BROWN}Chart.yaml${NC}"
-chart=$(cat "Chart.tmpl")
-echo -e "Setze Name ${BLUE}$release${NC}"
-chart=$(sed -r "s/##NAME##/$release/g" <<< "$chart")
-echo -e "Setze App Version ${BLUE}$version${NC}"
-chart=$(sed -r "s/##APP_VERSION##/$version/g" <<< "$chart")
-chart=$(sed -r "s/##HELM_VERSION##/$version/g" <<< "$chart")
-echo "$chart" > "Chart.yaml"
-
-echo -e "${BROWN}values.yaml${NC}"
-values=$(cat "values.tmpl")
-echo -e "Setze Host ${BLUE}${release}.esb.test-prediger.de${NC}"
-values=$(sed -r "s/##HOST##/${release}.esb.test-prediger.de/g" <<< "$values")
-values=$(sed -r "s/##TLSHOST##/${release}.esb.test-prediger.de/g" <<< "$values")
-echo -e "Setze SecretName ${BLUE}${release}-esb-test-prediger-de-tls${NC}"
-values=$(sed -r "s/##SECRETNAME##/${release}-esb-test-prediger-de-tls/g" <<< "$values")
-echo "$values" > "values.yaml"
+	echo -e "${BROWN}${type}/values.yaml${NC}"
+	values=$(cat "values.tmpl")
+	echo -e "Setze Host ${BLUE}${release}${type}.esb.test-prediger.de${NC}"
+	values=$(sed -r "s/##HOST##/${release}${type}.esb.test-prediger.de/g" <<< "$values")
+	values=$(sed -r "s/##TLSHOST##/${release}${type}.esb.test-prediger.de/g" <<< "$values")
+	echo -e "Setze SecretName ${BLUE}${release}${type}-esb-test-prediger-de-tls${NC}"
+	values=$(sed -r "s/##SECRETNAME##/${release}${type}-esb-test-prediger-de-tls/g" <<< "$values")
+	echo "${values}" > "${type}/values.yaml"
+done
 
 echo -e "${GREEN}Fertig!${NC}"
 
